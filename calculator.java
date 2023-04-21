@@ -1,3 +1,7 @@
+/*
+4) К калькулятору из предыдущего дз добавить логирование.
+ */
+
 import com.sun.tools.javac.Main;
 
 import java.io.IOException;
