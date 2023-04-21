@@ -10,12 +10,12 @@ public class task03 {
         final Matcher matcher = pattern.matcher(string);
 
         while (matcher.find()) {
-                System.out.printf(
-                        "Student %s got %s in a subject %s.\n",
-                        matcher.group(1),
-                        matcher.group(2),
-                        matcher.group(3)
-                );
+            System.out.printf(
+                "Student %s got %s in a subject %s\n",
+                matcher.group(1),
+                matcher.group(2),
+                matcher.group(3)
+            );
         }
     }
 }
