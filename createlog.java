@@ -12,7 +12,7 @@ public class createlog {
 
     static {
         try {
-            FileHandler fh = new FileHandler("./logger.log", true);
+            FileHandler fh = new FileHandler("./logger.log");
             fh.setFormatter(new SimpleFormatter());
             LOGGER = Logger.getLogger(Main.class.getName());
             LOGGER.addHandler(fh);
