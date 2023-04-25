@@ -1,5 +1,4 @@
 import java.util.Arrays;
-import java.util.LinkedList;
 
 public class sorting {
     public static void main(String[] args) {
@@ -49,9 +48,7 @@ public class sorting {
             j++;
         }
 
-        for (int m = 0; m < tempArray.length; m++) {
-            array[left + m] = tempArray[m];
-        }
+        System.arraycopy(tempArray, 0, array, left + 0, tempArray.length);
     }
 
     private static void arrayFill(int[] inputArray) {
