@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 public class sorting {
     public static void main(String[] args) {
-        int[] inputArray = new int[10];
+        int[] inputArray = new int[100];
 
         arrayFill(inputArray);
         System.out.println(Arrays.toString(inputArray));
@@ -48,7 +48,7 @@ public class sorting {
             j++;
         }
 
-        System.arraycopy(tempArray, 0, array, left + 0, tempArray.length);
+        System.arraycopy(tempArray, 0, array, left, tempArray.length);
     }
 
     private static void arrayFill(int[] inputArray) {
