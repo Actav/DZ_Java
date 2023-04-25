@@ -2,7 +2,7 @@ import java.util.LinkedList;
 
 public class evensremove {
     public static void main(String[] args) {
-        LinkedList<Integer> list = new LinkedList<Integer>();
+        LinkedList<Integer> list = new LinkedList<>();
         listFill(list);
 
         list.removeIf(num -> num % 2 == 0);
