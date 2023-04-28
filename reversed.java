@@ -10,7 +10,7 @@ public class reversed {
     }
 
     public static LinkedList<Integer> reverseList(LinkedList<Integer> list) {
-        LinkedList<Integer> reversed = new LinkedList<Integer>();
+        LinkedList<Integer> reversed = new LinkedList<>();
         for (Integer item : list) {
             reversed.addFirst(item);
         }
