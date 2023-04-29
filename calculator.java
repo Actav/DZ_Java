@@ -10,7 +10,7 @@ public class calculator {
         Scanner scanner = new Scanner(System.in);
         String input = null;
 
-        String regex = "([0-9,.-]+)?(.+?)([0-9,.-]+)?";
+        String regex = "([0-9,.]+)?(.+?)([0-9,.\\-]+)?";
         Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
 
         double num1, num2, result = 0;
@@ -21,13 +21,14 @@ public class calculator {
         while (true) {
             if (input == null) {
                 System.out.println(
-                        "Available Operations:\n" +
-                        "\"+\" - addition\n" +
-                        "\"*\" - multiplication\n" +
-                        "\"/\" - division\n" +
-                        "\"-\" - subtraction\n" +
-                        "\"<\" - undo\n" +
-                        "\"=\" - exit"
+                        """
+                                Available Operations:
+                                "+" - addition
+                                "*" - multiplication
+                                "/" - division
+                                "-" - subtraction
+                                "<" - undo
+                                "=" - exit"""
                 );
 
                 System.out.print("Input example: 2+2 >>");
@@ -69,7 +70,7 @@ public class calculator {
                         default -> System.out.println("Cannot operand!");
                     }
                 }
-            };
+            }
 
             System.out.printf(">>%.2f", result);
         }
