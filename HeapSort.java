@@ -1,17 +1,15 @@
 public class HeapSort {
-    public static void main(String args[]) {
-        int arr[] = {12, 11, 13, 5, 6, 7,1, 0, 158, 52, 12368};
-        int n = arr.length;
+    public static void main(String[] args) {
+        int[] arr = {12, 11, 13, 5, 6, 7,1, 0, 158, 52, 12368};
 
         HeapSort heapSort = new HeapSort();
         heapSort.sort(arr);
 
         System.out.println("Sorted array:");
-        for (int i=0; i<n; ++i)
-            System.out.print(arr[i] + " ");
+        for (int j : arr) System.out.print(j + " ");
     }
 
-    public void sort(int arr[]) {
+    public void sort(int[] arr) {
         int n = arr.length;
 
         // Построение кучи (перегруппируем массив)
@@ -31,7 +29,7 @@ public class HeapSort {
     }
 
     // Функция для перевода поддерева с корнем в индексе i в кучу максимальных элементов
-    void heapify(int arr[], int n, int i) {
+    void heapify(int[] arr, int n, int i) {
         int largest = i; // Инициализируем наибольший элемент как корень
         int l = 2*i + 1; // левый = 2*i + 1
         int r = 2*i + 2; // правый = 2*i + 2
