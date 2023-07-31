@@ -1,7 +1,0 @@
-2,Toy Car
-1,Teddy Bear
-3,Doll
-1,Teddy Bear
-1,Teddy Bear
-1,Teddy Bear
-1,Teddy Bear
