@@ -3,10 +3,10 @@ package dto;
 import java.io.Serializable;
 
 public class Toy implements Serializable {
-    private String id;
-    private String name;
+    private final String id;
+    private final String name;
     private int quantity;
-    private int weight;
+    private final int weight;
 
     public Toy(String id, String name, int quantity, int weight) {
         this.id = id;
