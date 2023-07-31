@@ -17,7 +17,7 @@ public class Main {
         File file = new File(filePath);
         try {
             if (!file.exists()) {
-                file.createNewFile()
+                file.createNewFile();
                 System.out.println("Файл создан: " + filePath);
             }
         } catch (IOException e) {

@@ -19,13 +19,6 @@ public class FileToyRepository implements ToyRepository {
     }
 
     @Override
-    public void addPrizeToy(Toy toy) {
-        List<Toy> prizeToys = loadToysFromFile();
-        prizeToys.add(toy);
-        saveToysToFile(prizeToys);
-    }
-
-    @Override
     public void updateToy(Toy toy) {
         List<Toy> prizeToys = loadToysFromFile();
         for (int i = 0; i < prizeToys.size(); i++) {
