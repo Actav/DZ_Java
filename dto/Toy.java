@@ -3,8 +3,8 @@ package dto;
 import java.io.Serializable;
 
 public class Toy implements Serializable {
-    private String id;
-    private String name;
+    private final String id;
+    private final String name;
     private int quantity;
     private int weight;
 
@@ -29,13 +29,5 @@ public class Toy implements Serializable {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    public int getWeight() {
-        return weight;
-    }
-
-    public void setWeight(int weight) {
-        this.weight = weight;
     }
 }

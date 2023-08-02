@@ -1,7 +1,6 @@
 package repository;
 
 import dto.Toy;
-import repository.ToyRepository;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -52,10 +51,11 @@ public class FileToyRepository implements ToyRepository {
     }
 
     public void deletePrizeToysFile() {
-        File file = new File("prize_toys.dat");
+        File file = new File(FILE_NAME);
         if (file.exists()) {
-            file.delete();
+            if (file.delete()) {
+                System.out.println("Файл " + FILE_NAME + " удален");
+            }
         }
     }
-
 }
