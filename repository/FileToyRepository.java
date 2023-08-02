@@ -1,21 +1,25 @@
 package repository;
 
 import dto.Toy;
+import repository.ToyRepository;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FileToyRepository implements ToyRepository {
-    private final String filename;
+    private static final String FILE_NAME = "prize_toys.dat";
 
-    public FileToyRepository(String filename) {
-        this.filename = filename;
+    @Override
+    public List<Toy> getAllToys() {
+        return loadToysFromFile();
     }
 
     @Override
-    public List<Toy> getPrizeToys() {
-        return loadToysFromFile();
+    public void addPrizeToy(Toy toy) {
+        List<Toy> prizeToys = loadToysFromFile();
+        prizeToys.add(toy);
+        saveToysToFile(prizeToys);
     }
 
     @Override
@@ -30,24 +34,18 @@ public class FileToyRepository implements ToyRepository {
         saveToysToFile(prizeToys);
     }
 
-    @Override
-    public void fillPrizeToys(List<Toy> toys) {
-        saveToysToFile(toys);
-    }
-
     private List<Toy> loadToysFromFile() {
-        List<Toy> toys = new ArrayList<>();
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(filename))) {
-            toys = (List<Toy>) inputStream.readObject();
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(FILE_NAME))) {
+            return (List<Toy>) inputStream.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            // Если файл не найден или возникла ошибка чтения, возвращаем пустой список
+            return new ArrayList<>();
         }
-        return toys;
     }
 
-    private void saveToysToFile(List<Toy> toys) {
-        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(filename))) {
-            outputStream.writeObject(toys);
+    private void saveToysToFile(List<Toy> prizeToys) {
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(FILE_NAME))) {
+            outputStream.writeObject(prizeToys);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,58 +1,42 @@
 import dto.Toy;
-import generator.PrizeToyGenerator;
 import repository.FileToyRepository;
+import repository.ToyRepository;
 import service.ToyService;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        // Указываем путь к файлу
-        String filePath = "prize_toys.dat";
-
-        // Создаем файл, если его не существует
-        File file = new File(filePath);
-        try {
-            if (!file.exists()) {
-                file.createNewFile();
-                System.out.println("Файл создан: " + filePath);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();        }
-
-        FileToyRepository toyRepository = new FileToyRepository(filePath);
-        List<Toy> prizeToys = toyRepository.getPrizeToys();
-
-        if (prizeToys.isEmpty()) {
-            // Если автомат пуст, добавим несколько призовых игрушек
-            List<Toy> initialPrizeToys = PrizeToyGenerator.createInitialPrizeToys();
-            toyRepository.fillPrizeToys(initialPrizeToys);
-        }
-
-        System.out.println("Добро пожаловать в программу розыгрыша игрушек!");
+        ToyRepository toyRepository = new FileToyRepository();
+        initializePrizeToysIfNeeded(toyRepository);
 
         Scanner scanner = new Scanner(System.in);
-        String input;
+        ToyService toyService = new ToyService(toyRepository);
 
-        do {
+        System.out.println("Добро пожаловать в программу розыгрыша игрушек!");
+        while (true) {
             System.out.println("Чтобы разыграть призовую игрушку, введите 'r'. Для выхода из программы введите 'q':");
-            input = scanner.nextLine();
-
-            if (input.equalsIgnoreCase("r")) {
-                ToyService toyService = new ToyService(toyRepository);
+            String input = scanner.nextLine();
+            if (input.equalsIgnoreCase("q")) {
+                System.out.println("Выход из программы.");
+                break;
+            } else if (input.equalsIgnoreCase("r")) {
                 Toy prizeToy = toyService.getRandomPrizeToy();
                 if (prizeToy != null) {
                     System.out.println("Поздравляем! Вы получили призовую игрушку: " + prizeToy.getName());
-                    toyRepository.updateToy(prizeToy); // Уменьшаем количество призовых игрушек в автомате
-                } else {
-                    System.out.println("Автомат с призовыми игрушками пуст. Приходите позже!");
                 }
+            } else {
+                System.out.println("Неверная команда. Пожалуйста, введите 'r' или 'q'.");
             }
-        } while (!input.equalsIgnoreCase("q"));
+        }
+    }
 
-        scanner.close();
+    private static void initializePrizeToysIfNeeded(ToyRepository toyRepository) {
+        if (toyRepository.getAllToys().isEmpty()) {
+            // Если список призовых игрушек пуст, добавляем начальные данные
+            toyRepository.addPrizeToy(new Toy("1", "Мяч", 1, 20));
+            toyRepository.addPrizeToy(new Toy("2", "Кукла", 1, 15));
+            toyRepository.addPrizeToy(new Toy("3", "Машинка", 1, 10));
+        }
     }
 }

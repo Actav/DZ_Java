@@ -8,32 +8,30 @@ import java.util.Random;
 
 public class ToyService {
     private final ToyRepository toyRepository;
-    private final Random random;
 
     public ToyService(ToyRepository toyRepository) {
         this.toyRepository = toyRepository;
-        this.random = new Random();
     }
 
     public Toy getRandomPrizeToy() {
-        List<Toy> prizeToys = toyRepository.getPrizeToys();
+        List<Toy> prizeToys = toyRepository.getAllToys();
         if (prizeToys.isEmpty()) {
+            System.out.println("Извините, призовых игрушек в автомате нет.");
             return null;
         }
 
-        int totalWeight = prizeToys.stream().mapToInt(toy -> toy.getWeight()).sum();
-        int randomWeight = random.nextInt(totalWeight);
-        int cumulativeWeight = 0;
+        Random random = new Random();
+        int index = random.nextInt(prizeToys.size());
+        Toy prizeToy = prizeToys.get(index);
 
-        for (Toy toy : prizeToys) {
-            cumulativeWeight += toy.getWeight();
-            if (randomWeight < cumulativeWeight) {
-                toy.setQuantity(toy.getQuantity() - 1);
-                toyRepository.updateToy(toy);
-                return toy;
-            }
+        // Проверяем, что количество игрушек больше 0
+        if (prizeToy.getQuantity() > 0) {
+            prizeToy.setQuantity(prizeToy.getQuantity() - 1);
+            toyRepository.updateToy(prizeToy);
+            return prizeToy;
+        } else {
+            System.out.println("Извините, данной игрушки временно нет в наличии.");
+            return null;
         }
-
-        return null;
     }
 }

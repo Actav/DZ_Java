@@ -3,10 +3,10 @@ package dto;
 import java.io.Serializable;
 
 public class Toy implements Serializable {
-    private final String id;
-    private final String name;
+    private String id;
+    private String name;
     private int quantity;
-    private final int weight;
+    private int weight;
 
     public Toy(String id, String name, int quantity, int weight) {
         this.id = id;
@@ -35,8 +35,7 @@ public class Toy implements Serializable {
         return weight;
     }
 
-    @Override
-    public String toString() {
-        return name;
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 }
