@@ -50,4 +50,12 @@ public class FileToyRepository implements ToyRepository {
             e.printStackTrace();
         }
     }
+
+    public void deletePrizeToysFile() {
+        File file = new File("prize_toys.dat");
+        if (file.exists()) {
+            file.delete();
+        }
+    }
+
 }

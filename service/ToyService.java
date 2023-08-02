@@ -13,25 +13,49 @@ public class ToyService {
         this.toyRepository = toyRepository;
     }
 
-    public Toy getRandomPrizeToy() {
+    public Toy getRandomPrizeToy(List<Toy> prizeToys) {
+        Toy prizeToy = findAvailableToy(prizeToys);
+
+        if (prizeToy != null) {
+            prizeToy.setQuantity(prizeToy.getQuantity() - 1);
+            toyRepository.updateToy(prizeToy);
+
+            return prizeToy;
+        } else {
+            System.out.println("Извините, временно нет доступных призовых игрушек.");
+
+            return null;
+        }
+    }
+
+    public List<Toy> getPrizeToys() {
         List<Toy> prizeToys = toyRepository.getAllToys();
-        if (prizeToys.isEmpty()) {
-            System.out.println("Извините, призовых игрушек в автомате нет.");
+        int totalRemainingToys = prizeToys.stream().mapToInt(Toy::getQuantity).sum();
+
+        if (totalRemainingToys == 0) {
+            return null;
+        }
+
+        return prizeToys;
+    }
+
+    private Toy findAvailableToy(List<Toy> toys) {
+        int totalQuantity = toys.stream().mapToInt(Toy::getQuantity).sum();
+
+        if (totalQuantity == 0) {
             return null;
         }
 
         Random random = new Random();
-        int index = random.nextInt(prizeToys.size());
-        Toy prizeToy = prizeToys.get(index);
+        int randomIndex = random.nextInt(totalQuantity);
 
-        // Проверяем, что количество игрушек больше 0
-        if (prizeToy.getQuantity() > 0) {
-            prizeToy.setQuantity(prizeToy.getQuantity() - 1);
-            toyRepository.updateToy(prizeToy);
-            return prizeToy;
-        } else {
-            System.out.println("Извините, данной игрушки временно нет в наличии.");
-            return null;
+        for (Toy toy : toys) {
+            if (randomIndex < toy.getQuantity()) {
+                return toy;
+            }
+            randomIndex -= toy.getQuantity();
         }
+
+        return null;
     }
 }
